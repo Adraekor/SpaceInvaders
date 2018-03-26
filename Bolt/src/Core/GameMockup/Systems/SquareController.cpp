@@ -74,15 +74,7 @@ cSquareController::Update( unsigned int iDeltaTime )
 
         for( int i = 0; i < userinput->mActions.size(); ++i )
         {
-            if( userinput->mActions[ i ] == "moveup" )
-            {
-                simplephysic->mVelocity.y -= 1.0F;
-            }
-            else if( userinput->mActions[ i ] == "movedown" )
-            {
-                simplephysic->mVelocity.y += 1.0F;
-            }
-            else if( userinput->mActions[ i ] == "moveright" )
+            if( userinput->mActions[ i ] == "moveright" )
             {
                 simplephysic->mVelocity.x += 1.0F;
                 if( spriteanimated )
@@ -93,14 +85,6 @@ cSquareController::Update( unsigned int iDeltaTime )
                 simplephysic->mVelocity.x -= 1.0F;
                 if( spriteanimated )
                     spriteanimated->Unflip();
-            }
-            else if( userinput->mActions[ i ] == "moveupslow" )
-            {
-                simplephysic->mVelocity.y -= 0.001F;
-            }
-            else if( userinput->mActions[ i ] == "movedownslow" )
-            {
-                simplephysic->mVelocity.y += 0.001F;
             }
             else if( userinput->mActions[ i ] == "moverightslow" )
             {

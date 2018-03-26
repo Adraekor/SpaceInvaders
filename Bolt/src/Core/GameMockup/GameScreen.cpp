@@ -55,13 +55,16 @@ cGameScreen::Initialize()
         world->AddEntity( ent );
     }
 
-    cEntity* ent = new cEntity( world );
-    ent->AddComponent( new cPosition( 400.0F, 300.0F ) );
+    /*cEntity* ent = new cEntity( world );
+    ent->AddComponent( new cPosition( 400.0F, 550.0F ) );
     ent->AddComponent( new cSize( 5.0F, 5.0F ) );
-    ent->AddComponent( new cColor( 20,255,20 ) );
+    ent->AddComponent( new cColor( 20, 255, 20 ) );
     ent->AddComponent( new cUserInput() );
-    ent->AddComponent( new cSimplePhysic( 400.0F, 300.0F, 5.0F, 5.0F, cSimplePhysic::eType::kDynamic ) );
-    world->AddEntity( ent );
+    ent->AddComponent( new cSimplePhysic( 400.0F, 550.0F, 5.0F, 5.0F, cSimplePhysic::eType::kDynamic ) );
+    world->AddEntity( ent );*/
+
+	cEntity* entity = cEntityParser::Instance()->CreateEntityFromFile( "resources/Core/Entities/entityA.entity" );
+	world->AddEntity( entity );
 
     sf::Vector2f  availableGeometry = sf::Vector2f( float( cGameApplication::App()->Window()->getSize().x ),
                                                     float( cGameApplication::App()->Window()->getSize().y ) );
