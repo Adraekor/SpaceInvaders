@@ -1,0 +1,9 @@
+[submodule "tinyxml2"]
+	path = tinyxml2
+	url = https://github.com/leethomason/tinyxml2
+[submodule "cpython"]
+	path = cpython
+	url = https://github.com/python/cpython
+[submodule "SFML"]
+	path = SFML
+	url = https://github.com/SFML/SFML
