@@ -4,6 +4,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <functional>
+
+class cEntity;
+
 class cSimplePhysic :
     public cComponent
 {
@@ -36,5 +40,7 @@ public:
     sf::Vector2f        mVelocity;
     sf::Rect< float >   mHitBox;
     eType               mType;
+
+	std::function< void( cEntity* iEntity ) > mCollisionCallback;
 };
 

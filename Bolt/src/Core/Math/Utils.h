@@ -18,6 +18,7 @@
 static sf::Vector2f gYAxisVector( 0.0F, 1.0F );
 static sf::Vector2f gXAxisVector( 1.0F, 0.0F );
 static sf::Vector2f gNULLVector( 0.0F, 0.0F );
+static int gScore = 0;
 
 
 

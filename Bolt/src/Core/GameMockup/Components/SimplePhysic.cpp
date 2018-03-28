@@ -15,7 +15,8 @@ cSimplePhysic::cSimplePhysic() :
     tSuperClass( "simplephysic" ),
     mHitBox( 0.0F, 0.0F, 0.0F, 0.0F ),
     mVelocity( 0.0F, 0.0F ),
-    mType( kStatic )
+    mType( kStatic ),
+	mCollisionCallback( 0 )
 {
 }
 
@@ -24,7 +25,8 @@ cSimplePhysic::cSimplePhysic( float iX, float iY, float iW, float iH, eType iTyp
     tSuperClass( "simplephysic" ),
     mHitBox( iX, iY, iW, iH ),
     mVelocity( 0.0F, 0.0F ),
-    mType( iType )
+    mType( iType ),
+	mCollisionCallback( 0 )
 {
 }
 
@@ -33,7 +35,8 @@ cSimplePhysic::cSimplePhysic( const cSimplePhysic & iSimplePhysic ) :
     tSuperClass( iSimplePhysic ),
     mHitBox( iSimplePhysic.mHitBox ),
     mVelocity( iSimplePhysic.mVelocity ),
-    mType( iSimplePhysic.mType )
+    mType( iSimplePhysic.mType ),
+	mCollisionCallback( iSimplePhysic.mCollisionCallback )
 {
 }
 
@@ -85,6 +88,5 @@ cSimplePhysic::LoadXML( tinyxml2::XMLElement* iNode )
 
     mType = eType( iNode->IntAttribute( "type", 0 ) );
 }
-
 
 

@@ -17,6 +17,7 @@
 
 #include "Volumetric/Static/Data.h"
 
+static cEntity* gBullet;
 
 int
 main(int argc, char *argv[])

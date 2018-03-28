@@ -98,6 +98,10 @@ cGameApplication::Initialize()
     mWorld = new cWorld();
     mWorld->AddSystem( new cSimplerRenderer() );
 
+    // Following call may need world
+    cComponentRegistry::Instance()->Initialize();
+    cEntityParser::Instance()->Initialize();
+
     cInputConverter* ic = new cInputConverter();
     mWorld->AddSystem( ic );
     mWorld->ConnectSystemToEvents( ic );
@@ -107,9 +111,6 @@ cGameApplication::Initialize()
     mWorld->AddSystem( new cSimplePhysics() );
     mWorld->AddSystem( new cSquareController() );
 
-    // Following call may need world
-    cComponentRegistry::Instance()->Initialize();
-    cEntityParser::Instance()->Initialize();
 
     // =========== GENERAL CONFIG ===========
     mMainWindow->setKeyRepeatEnabled( false );
@@ -151,8 +152,8 @@ cGameApplication::Initialize()
     pageOne->AddItem( itemOne );
     pageOne->AddItem( itemOne2 );
     pageOne->AddItem( gameScreenSwap );
-    pageOne->AddItem( infiltratorScreenSwap );
-    pageOne->AddItem( openGLRenderSceneScreenSwap );
+    //pageOne->AddItem( infiltratorScreenSwap );
+    //pageOne->AddItem( openGLRenderSceneScreenSwap );
     pageTwo->AddItem( itemTwo );
     pageTwo->AddItem( itemTwo2 );
 

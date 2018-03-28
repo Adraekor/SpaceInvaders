@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Screen/Screen.h"
-#include "GUI/ConsoleWidget.h"
 
 class cGameScreen :
     public cScreen
@@ -46,8 +45,5 @@ public:
     // Input/Output
     virtual  void SaveXML();
     virtual  void LoadXML();
-
-private:
-    ::nGUI::cConsoleWidget  mConsoleWidget;
 };
 

@@ -106,6 +106,16 @@ cSimplePhysics::Update( unsigned int iDeltaTime )
         std::vector< cEntity* > surrounding;
         entityMap->GetSurroundingEntitiesOf( &surrounding, entity );
 
+
+		if( entity->HasTag( "bullet" ) )
+		{
+			if( simplephysic->mHitBox.top <= -20.0F )
+			{
+				simplephysic->mCollisionCallback( 0 );
+				continue;
+			}
+		}
+
         for( int j = 0; j < surrounding.size(); ++j )
         {
             cEntity* surroundingEntity = surrounding[ j ];
@@ -114,6 +124,8 @@ cSimplePhysics::Update( unsigned int iDeltaTime )
             if( projection.intersects( simplephysicSurr->mHitBox ) )
             {
                 collided = true;
+				if( simplephysic->mCollisionCallback)
+					simplephysic->mCollisionCallback( surrounding[ j ]);
                 simplephysic->mVelocity.x = 0.0F;
                 simplephysic->mVelocity.y = 0.0F;
                 break;

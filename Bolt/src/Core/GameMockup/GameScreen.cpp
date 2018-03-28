@@ -13,6 +13,8 @@
 #include "GameMockup/Components/SimplePhysic.h"
 
 #include <iostream>
+#include <string>
+#include <random>
 
 // -------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------ Construction
@@ -42,64 +44,47 @@ cGameScreen::Initialize()
 
     cWorld* world = cGameApplication::App()->World();
 
-    for( int i = 0; i < 500; ++i )
-    {
-        int posX = rand() % ( windowSize.x - 10 );
-        int posY = rand() % (windowSize.y - 10);
+	auto width  = 5 * 40 + 4 * 40;
+	auto height = 4 * 64 + 3 * 64;
+	auto topleftX = windowSize.x / 2 - width / 2;
+	auto topleftY = windowSize.y / 2 - height/ 2;
+	auto x1 = topleftX;
+	auto y1 = topleftY;
 
-        cEntity* ent = new cEntity( world );
-        ent->AddComponent( new cSize( 2.0F, 2.0F ) );
-        ent->AddComponent( new cColor( 255, 20, 20 ) );
-        ent->AddComponent( new cPosition( float(posX), float(posY) ) );
-        ent->AddComponent( new cSimplePhysic( float( posX ), float( posY ), 2.0F, 2.0F, cSimplePhysic::eType::kDynamic ) );
-        world->AddEntity( ent );
-    }
+	for( int n = 0; n < 5; ++n )
+	{
+		for( int m = 0; m < 4; ++m )
+		{
+			cEntity* ent = cEntityParser::Instance()->CreateEntityFromPrototypeMap( "monster1" );
 
-    /*cEntity* ent = new cEntity( world );
-    ent->AddComponent( new cPosition( 400.0F, 550.0F ) );
-    ent->AddComponent( new cSize( 5.0F, 5.0F ) );
-    ent->AddComponent( new cColor( 20, 255, 20 ) );
-    ent->AddComponent( new cUserInput() );
-    ent->AddComponent( new cSimplePhysic( 400.0F, 550.0F, 5.0F, 5.0F, cSimplePhysic::eType::kDynamic ) );
-    world->AddEntity( ent );*/
+			auto posA = dynamic_cast< cPosition* > ( ent->GetComponentByName( "position" ) );
+			posA->mPosition.x = x1;
+			posA->mPosition.y = y1;
+			auto spriteanimated = dynamic_cast< cSpriteAnimated* >( ent->GetComponentByName( "spriteanimated" ) );
 
-	cEntity* entity = cEntityParser::Instance()->CreateEntityFromFile( "resources/Core/Entities/entityA.entity" );
+			ent->AddComponent( new cSimplePhysic( x1, y1, spriteanimated->mCurrentSpriteRect.width, spriteanimated->mCurrentSpriteRect.height, cSimplePhysic::eType::kDynamic ) );
+			world->AddEntity( ent );
+
+			y1 += 40;
+		}
+		y1 = topleftY;
+		x1 += 64;
+	}
+
+	cEntity* entity = cEntityParser::Instance()->CreateEntityFromFile( "resources/Core/Entities/spaceship.entity" );
+	entity->AddComponent( new cUserInput() );
+
+	auto spriteanimated = dynamic_cast< cSpriteAnimated* >( entity->GetComponentByName( "spriteanimated" ) );
+	float x = windowSize.x / 2.0F - spriteanimated->mCurrentSpriteRect.width / 2.0F;
+	float y = 4 * windowSize.y / 5;
+
+	auto pos = dynamic_cast< cPosition* > ( entity->GetComponentByName( "position" ) );
+	pos->mPosition.x = x;
+	pos->mPosition.y = y;
+
+	auto sprite = dynamic_cast< cSpriteAnimated* > ( entity->GetComponentByName( "spriteanimated" ) );
+	entity->AddComponent( new cSimplePhysic( x, y, sprite->mCurrentSpriteRect.width, sprite->mCurrentSpriteRect.height, cSimplePhysic::eType::kDynamic ) );
 	world->AddEntity( entity );
-
-    sf::Vector2f  availableGeometry = sf::Vector2f( float( cGameApplication::App()->Window()->getSize().x ),
-                                                    float( cGameApplication::App()->Window()->getSize().y ) );
-    double posRatio     = 3./5.;
-    double sizeRatio    = 2./5.;
-    sf::Vector2f  size      = sf::Vector2f( availableGeometry.x, availableGeometry.y * float(sizeRatio) );
-    sf::Vector2f  position  = sf::Vector2f( 0, availableGeometry.y * float(posRatio));
-    mConsoleWidget.SetSize( size );
-    mConsoleWidget.SetPosition( position );
-    mConsoleWidget.ToggleVisibility();
-
-
-    // Not compatible with input system
-    //cGameApplication::App()->Window()->setKeyRepeatEnabled( true );
-
-
-
-    std::function< void( void )> f = [=]( void ) {
-        cEntity* ent = new cEntity( world );
-        cSpriteAnimated* animation = new cSpriteAnimated( "resources/Core/Images/SpriteSheets/communiste_spritesheet.png", 40, 64 );
-        animation->mFrameRate = 24;
-        animation->mPaused = false;
-
-        ent->AddComponent( animation );
-        sf::Window* window = cGameApplication::App()->Window();
-        sf::Vector2u size = window->getSize();
-        float posX = float(rand() % ( size.x - 10 ));
-        float posY = float(rand() % (size.y - 10));
-        ent->AddComponent( new cPosition( posX, posY ) );
-        ent->AddComponent( new cUserInput() );
-        ent->AddComponent( new cSimplePhysic( posX, posY, 40.0F, 64.0F, cSimplePhysic::eType::kDynamic ) );
-        world->AddEntity( ent );
-    };
-
-    ::nBoltScript::Env()->RegisterFunction( "newEntity", f );
 }
 
 
@@ -118,18 +103,12 @@ cGameScreen::Finalize()
 void
 cGameScreen::Draw( sf::RenderTarget* iRenderTarget )
 {
-    auto window = cGameApplication::App()->Window();
-    sf::View view = window->getView();
-    window->setView( window->getDefaultView() );
-    mConsoleWidget.Draw( iRenderTarget );
-    window->setView( view );
 }
 
 
 void
 cGameScreen::Update( unsigned int iDeltaTime )
 {
-    mConsoleWidget.Update( iDeltaTime );
 }
 
 
@@ -148,14 +127,12 @@ cGameScreen::Resized( const sf::Event& iEvent )
 void
 cGameScreen::TextEntered( const sf::Event& iEvent )
 {
-    mConsoleWidget.TextEntered( iEvent );
 }
 
 
 void
 cGameScreen::KeyPressed( const sf::Event& iEvent )
 {
-    mConsoleWidget.KeyPressed( iEvent );
 
 }
 
@@ -188,8 +165,6 @@ cGameScreen::KeyReleased( const sf::Event& iEvent )
         cEntity* entity = cEntityParser::Instance()->CreateEntityFromPrototypeMap( "testUltime" );
         cGameApplication::App()->World()->AddEntity( entity );
     }
-
-    mConsoleWidget.KeyReleased( iEvent );
 }
 
 

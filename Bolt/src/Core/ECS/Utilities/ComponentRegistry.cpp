@@ -10,6 +10,7 @@
 #include "GameMockup/Components/SimplePhysic.h"
 #include "GameMockup/Components/SpriteAnimated.h"
 #include "GameMockup/Components/UserInput.h"
+#include "GameMockup/Components/Score.h"
 
 // -------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------ Construction
@@ -58,6 +59,7 @@ cComponentRegistry::Initialize()
     cSpriteAnimated*    spriteAnimatedPrototype = new cSpriteAnimated();
     cUserInput*         userInputPrototype      = new cUserInput();
     cSimplePhysic*      simplePhysicPrototype   = new cSimplePhysic();
+	cScore*				score					= new cScore();
 
     mComponents.insert( std::make_pair( colorPrototype->Name(), colorPrototype ) );
     mComponents.insert( std::make_pair( directionPrototype->Name(), directionPrototype ) );
@@ -67,6 +69,7 @@ cComponentRegistry::Initialize()
     mComponents.insert( std::make_pair( spriteAnimatedPrototype->Name(), spriteAnimatedPrototype ) );
     mComponents.insert( std::make_pair( userInputPrototype->Name(), userInputPrototype ) );
     mComponents.insert( std::make_pair( simplePhysicPrototype->Name(), simplePhysicPrototype ) );
+	mComponents.insert( std::make_pair( score->Name(), score ) );
 }
 
 
