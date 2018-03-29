@@ -41,6 +41,7 @@ TestResult.xml
 dlldata.c
 Bolt/Windows/BoltCore-VS2017/BoltCore/.vs
 Bolt/Windows/BoltCore-VS2017/BoltCore/Lib
+Bolt/Windows/BoltCore-VS2017/BoltCore/Lib/*
 Bolt/Windows/BoltCore-VS2017/BoltCore/x64
 
 # DNX
