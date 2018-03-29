@@ -1,0 +1,35 @@
+<world>
+    <entities>
+        <entity id="bulletc6">
+            <components>
+                <component name="color" colorr="0" colorg="0" colorb="0" colora="255"/>
+                <component name="position" x="-10" y="-10"/>
+                <component name="size" w="0" h="0"/>
+                <component name="simplephysic" x="-10" y="-10" w="10" h="10" veloX="0" veloY="0" type="1"/>
+            </components>
+            <tags>
+                <tag name="bullet"/>
+            </tags>
+        </entity>
+        <entity id="monster1c6">
+            <components>
+                <component name="spriteanimated" file="resources/Core/Images/SpriteSheets/communiste_spritesheet.png" width="40" height="64" framerate="24" paused="false"/>
+                <component name="position" x="476" y="196"/>
+                <component name="score" score="0"/>
+                <component name="simplephysic" x="476" y="196" w="40" h="64" veloX="0" veloY="0" type="1"/>
+            </components>
+            <tags>
+                <tag name="monster"/>
+            </tags>
+        </entity>
+        <entity id="SpaceShip">
+            <components>
+                <component name="spriteanimated" file="resources/Core/Images/SimpleImage/ship.png" width="80" height="80" framerate="24" paused="false"/>
+                <component name="position" x="360" y="480"/>
+                <component name="userinput"/>
+                <component name="simplephysic" x="360" y="480" w="80" h="80" veloX="0" veloY="0" type="1"/>
+            </components>
+            <tags/>
+        </entity>
+    </entities>
+</world>
